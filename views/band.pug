@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= band.name
+    h5 Genre : #{band.genre}
+    p Saved By : #{origin}
+    hr
+    if user
+        if user._id == band.origin
+            a.btn.btn-default(href="/bands/edit/"+band._id) Edit
+            a.btn.btn-danger.delete-band(href="#", data-id=band._id) Delete
+    
+            
