@@ -7,6 +7,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
+const ensureAuthenticated = require('./config/auth');
 
 // Mongoose setup
 mongoose.connect(config.database);
@@ -79,8 +80,8 @@ app.get('*', (req, res, next) => {
 });
 
 // Home Route
-app.get('/', (req, res) => {
-  Band.find({}, (err, bands) => {
+app.get('/', ensureAuthenticated, (req, res) => {
+  Band.find({ origin: req.user._id }, (err, bands) => {
     if (err) {
       console.log(err);
     } else {

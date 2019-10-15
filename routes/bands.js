@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const ensureAuthenticated = require('../config/auth');
 
 // Band Model
 let Band = require('../models/band');
@@ -114,15 +115,5 @@ router.get('/:id', (req, res) => {
 
     });
 });
-
-// Access Control
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    } else {
-        req.flash('danger', 'Please Login');
-        res.redirect('/users/login');
-    }
-}
 
 module.exports = router;
